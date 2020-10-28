@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Comment;
+use App\Entity\Conference;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator;
@@ -30,7 +32,10 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
-        // yield MenuItem::linkToCrud('The Label', 'icon class', EntityClass::class);
+       yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
+       //yield MenuItem::section('Important');
+       //yield MenuItem::linkToCrud('The Label', 'icon class', EntityClass::class);
+       yield MenuItem::linkToCrud('Comment','fa fa-file-pdf', Comment::class);
+       yield MenuItem::linkToCrud('Conference','fa fa-file-word', Conference::class);
     }
 }
