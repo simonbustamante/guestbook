@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class DashboardController extends AbstractDashboardController
 {
     /**
@@ -38,4 +39,6 @@ class DashboardController extends AbstractDashboardController
        yield MenuItem::linkToCrud('Comment','fa fa-comments', Comment::class);
        yield MenuItem::linkToCrud('Conference','fa fa-map-marker', Conference::class);
     }
+    
+    
 }

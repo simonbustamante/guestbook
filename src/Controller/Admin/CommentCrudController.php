@@ -8,10 +8,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 
 
 class CommentCrudController extends AbstractCrudController
@@ -32,6 +31,15 @@ class CommentCrudController extends AbstractCrudController
             AssociationField::new('conference'),//->autocomplet()
             TextField::new('photoFilename'),
         ];
+    }
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add('email')
+            ->add('createdAt')
+            ->add('conference')
+            ->add('author')
+        ;
     }
     
 }
