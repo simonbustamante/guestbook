@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Comment;
 use App\Entity\Conference;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
@@ -11,7 +12,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
-
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class CommentCrudController extends AbstractCrudController
 {
@@ -23,14 +25,22 @@ class CommentCrudController extends AbstractCrudController
     
     public function configureFields(string $pageName): iterable
     {
-        return [
+        $imagefile = ImageField::new('photo')->setFormType(VichImageType::class);
+        $image = ImageField::new('photoFilename')->setBasePath('/images/photos');
+        $fields = [
             TextField::new('author'),
             TextEditorField::new('text'),
             EmailField::new('email'),
             DateField::new('createdAt'),
             AssociationField::new('conference'),//->autocomplet()
-            TextField::new('photoFilename'),
+            
         ];
+        if ($pageName == Crud::PAGE_INDEX || $pageName == Crud::PAGE_DETAIL){
+            $fields[]=$image;
+        }else{
+            $fields[]=$imagefile;
+        }
+        return $fields;
     }
     public function configureFilters(Filters $filters): Filters
     {

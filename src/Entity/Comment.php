@@ -3,10 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
+ * @Vich\Uploadable
  */
 class Comment
 {
@@ -47,6 +51,38 @@ class Comment
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $photoFilename;
+
+    /**
+     * @Vich\UploadableField(mapping="photos", fileNameProperty="photoFilename")
+     */
+    private $photo;
+    
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updateAt;
+    public function __construct()
+    {
+        $this->updateAt = new DateTime();
+    }
+
+    /**
+     * @return mixed
+     */
+    function getPhoto() 
+    { 
+        return $this->photo; 
+    } 
+    /**
+     * @param mixed $photo
+     */
+    function setPhoto(File $photo = null) : void
+    {  
+       $this->photo = $photo; 
+       if($photo){
+           $this->updateAt = new DateTime();
+       }
+    } 
 
     public function getId(): ?int
     {
@@ -128,5 +164,19 @@ class Comment
     {
         return (string) $this->getEmail();
     }
+
+    public function getUpdateAt(): ?\DateTimeInterface
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(\DateTimeInterface $updateAt): self
+    {
+        $this->updateAt = $updateAt;
+
+        return $this;
+    }
     
 }
+
+	
