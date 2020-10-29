@@ -10,6 +10,7 @@ runtime:
         - sodium
         - ctype
         - iconv
+        - redis
        
 
 #variables:
@@ -20,7 +21,8 @@ runtime:
 build:
     flavor: none
 relationships:
-    database: "db:postgresql" 
+    database: "db:postgresql"
+    redis: "myredis:redis" 
 disk: 512
 
 web:
