@@ -42,6 +42,8 @@ This is a personal exercise based on Fabien Potencier book "The Fast Track". Som
 29. symfony console doctrine:migrations:migrate - update the DB
 30. symfony composer req admin - install a backed module
 31. symfony composer req twig - install twig
+32. symfony composer require twig/intl-extra
+
 
 
 
