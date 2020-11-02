@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\File\File;
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
  * @Vich\Uploadable
+ * @ORM\HasLifecycleCallbacks()
  */
 class Comment
 {
@@ -56,7 +57,7 @@ class Comment
      * @Vich\UploadableField(mapping="photos", fileNameProperty="photoFilename")
      */
     private $photo;
-    
+
     /**
      * @ORM\Column(type="datetime")
      */
@@ -69,20 +70,20 @@ class Comment
     /**
      * @return mixed
      */
-    function getPhoto() 
-    { 
-        return $this->photo; 
-    } 
+    function getPhoto()
+    {
+        return $this->photo;
+    }
     /**
      * @param mixed $photo
      */
-    function setPhoto(File $photo = null) : void
-    {  
-       $this->photo = $photo; 
-       if($photo){
-           $this->updateAt = new DateTime();
-       }
-    } 
+    function setPhoto(File $photo = null): void
+    {
+        $this->photo = $photo;
+        if ($photo) {
+            $this->updateAt = new DateTime();
+        }
+    }
 
     public function getId(): ?int
     {
@@ -176,7 +177,12 @@ class Comment
 
         return $this;
     }
-    
-}
 
-	
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTime();
+    }
+}
