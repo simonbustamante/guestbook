@@ -21,8 +21,7 @@ class ConferenceController extends AbstractController
 
 
 
-    public function __construct(Environment $twig, EntityManagerInterface
-    $entityManager)
+    public function __construct(Environment $twig, EntityManagerInterface $entityManager)
     {
         $this->twig = $twig;
         $this->entityManager = $entityManager;
@@ -45,20 +44,29 @@ class ConferenceController extends AbstractController
         $comment = new Comment();
         $form = $this->createForm(CommentFormType::class, $comment);
 
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setConference($conference);
+
+            $this->entityManager->persist($comment);
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('conference', ['slug' => $conference->getSlug()]);
+        }
+
+
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $commentRepository->getCommentPaginator($conference, $offset);
 
         return new Response($this->twig->render('conference/show.html.twig', [
             'conferences' => $conferenceRepository->findAll(),
             'conference' => $conference,
-            'comments' => $commentRepository->findBy(['conference' =>$conference], ['createdAt' => 'DESC']),
+            'comments' => $commentRepository->findBy(['conference' => $conference], ['createdAt' => 'DESC']),
             'comments' => $paginator,
             'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
             'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
             'comment_form' => $form->createView(),
-            
-        ]));
 
-        
+        ]));
     }
 }
