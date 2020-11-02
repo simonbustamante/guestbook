@@ -12,14 +12,20 @@ use App\Entity\Conference;
 use App\Repository\CommentRepository;
 use App\Entity\Comment;
 use App\Form\CommentFormType;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ConferenceController extends AbstractController
 {
     private $twig;
+    private $entityManager;
 
-    public function __construct(Environment $twig)
+
+
+    public function __construct(Environment $twig, EntityManagerInterface
+    $entityManager)
     {
         $this->twig = $twig;
+        $this->entityManager = $entityManager;
     }
     /**
      * @Route("/", name="homepage")

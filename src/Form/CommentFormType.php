@@ -6,19 +6,27 @@ use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Validator\Constraints\Image;
 
 class CommentFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('author')
+            ->add('author',null,['label'=>'Your Name',])
             ->add('text')
-            ->add('email')
-            ->add('createdAt')
-            ->add('photoFilename')
-            ->add('updateAt')
-            ->add('conference')
+            ->add('email',EmailType::class)
+            ->add('photoUnmapped', FileType::class, [
+                'label'=>'Photo',
+                'required' => false,
+                'mapped' => false,
+                'constraints' => [
+                    new Image(['maxSize' => '1024k'])
+                ],
+            ])
         ;
     }
 

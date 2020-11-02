@@ -6,10 +6,10 @@
 	<h2>{{ conference }}
 		Conference</h2>
 	{% if comments|length > 0 %}
-		<div>There are {{ comments|length }}comments.</div>
+		<div>There are {{ comments|length }} comments.</div>
 		{% for comment in comments %}
 			{% if comment.photofilename %}
-				<img src="{{ asset('uploads/photos/' ~ comment.photofilename)}}"/>
+				<img width="100" src="{{ asset('images/photos/' ~ comment.photofilename)}}"/>
 			{% endif %}
 			<h4>{{ comment.author }}</h4>
 			<small>
