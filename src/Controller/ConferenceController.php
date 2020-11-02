@@ -10,6 +10,8 @@ use App\Repository\ConferenceRepository;
 use Twig\Environment;
 use App\Entity\Conference;
 use App\Repository\CommentRepository;
+use App\Entity\Comment;
+use App\Form\CommentFormType;
 
 class ConferenceController extends AbstractController
 {
@@ -30,10 +32,13 @@ class ConferenceController extends AbstractController
         ]));
     }
     /**
-     * @Route("/conference/{id}", name="conference")
+     * @Route("/conference/{slug}", name="conference")
      */
     public function show(Request $request, Conference $conference, CommentRepository $commentRepository, ConferenceRepository $conferenceRepository)
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentFormType::class, $comment);
+
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $commentRepository->getCommentPaginator($conference, $offset);
 
@@ -44,6 +49,7 @@ class ConferenceController extends AbstractController
             'comments' => $paginator,
             'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
             'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
+            'comment_form' => $form->createView(),
             
         ]));
 
