@@ -19,7 +19,7 @@ class CommentFormType extends AbstractType
             ->add('author',null,['label'=>'Your Name',])
             ->add('text')
             ->add('email',EmailType::class)
-            ->add('photoUnmapped', FileType::class, [
+            ->add('photo', FileType::class, [
                 'label'=>'Photo',
                 'required' => false,
                 'mapped' => false,
