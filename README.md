@@ -46,6 +46,11 @@ This is a personal exercise based on Fabien Potencier book "The Fast Track". Som
 33. git checkout -b sessions-in-redis - create a new branch per new feature or resolved bug
 34. symfony console make:subscriber TwigEventSubscriber - creating a subcriber
 35. symfony console make:user Admin - creating an Admin user
+36. symfony console security:encode-password - generating a passwordfor admin user
+37. symfony run psql -c "INSERT INTO admin (id, username, roles, password) \
+VALUES (nextval('admin_id_seq'), 'admin', '[\"ROLE_ADMIN\"]', \
+'\$argon2id\$v=19\$m=65536,t=4,p=1\$CoRhi2o2vFf304A/NHMypw\$UNauM7sWii+DyyfiDhqTIKAWP28t+Dcvhxt7U9jM1IA')"            (Create a security user)
+38. 
 
 
 
