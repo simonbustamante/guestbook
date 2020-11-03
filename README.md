@@ -62,6 +62,7 @@ VALUES (nextval('admin_id_seq'), 'admin', '[\"ROLE_ADMIN\"]', \
 42. symfony composer req phpunit --dev - install phpunit to make unitary test
 43. symfony console make:unit-test SpamCheckerTest - testing the spam cheker class
 44. symfony console make:functional-test Controller\\ConferenceController - creating a functional test 
+45. APP_ENV=test symfony console secrets:set AKISMET_KEY - unitary test runs in a test env
 
 
 
