@@ -45,6 +45,7 @@ This is a personal exercise based on Fabien Potencier book "The Fast Track". Som
 32. symfony composer require twig/intl-extra
 33. git checkout -b sessions-in-redis - create a new branch per new feature or resolved bug
 34. symfony console make:subscriber TwigEventSubscriber - creating a subcriber
+35. symfony console make:user Admin - creating an Admin user
 
 
 
