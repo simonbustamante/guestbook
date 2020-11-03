@@ -52,7 +52,18 @@ VALUES (nextval('admin_id_seq'), 'admin', '[\"ROLE_ADMIN\"]', \
 '\$argon2id\$v=19\$m=65536,t=4,p=1\$CoRhi2o2vFf304A/NHMypw\$UNauM7sWii+DyyfiDhqTIKAWP28t+Dcvhxt7U9jM1IA')"            -(Create a security user)
 38. symfony console make:registration-form  -(to make a registration form)
 39. symfony composer req http-client -(to make API calls use the component http-client)
-40. 
+40. symfony console secrets:set AKISMET_KEY -(API KEY secret vault)
+41. symfony var:set --sensitive AKISMET_KEY=abcdef -(creating a sensitive env for SymfonyCloud - review in book or make the asymetric way like the next steps)
+41.1. $ APP_ENV=prod symfony console secrets:generate-keys - adding secret key pair for prod env
+41.2. $ APP_ENV=prod symfony console secrets:set AKISMET_KEY - Vuelve a añadir la clave de Akismet en el vault de producción, pero con su valor en producción
+41.3. $ symfony var:set --sensitive SYMFONY_DECRYPTION_SECRET=`php -r 'echo base64_encode(include("config/secrets/prod/prod.decrypt.private.php"));'`
+41.4. $ rm -f config/secrets/prod/prod.decrypt.private.php (Puedes añadir y hacer commit de todos los archivos; la clave de descifrado se ha añadido automáticamente al archivo .gitignore, por lo que nunca se enviará al repositorio. Para mayor seguridad, puedes quitarla de tu equipo local puesto que ya ha sido desplegado ahora:)
+
+42. symfony composer req phpunit --dev - install phpunit to make unitary test
+43. symfony console make:unit-test SpamCheckerTest - testing the spam cheker class
+44. symfony console make:functional-test Controller\\ConferenceController - creating a functional test 
+45. APP_ENV=test symfony console secrets:set AKISMET_KEY - unitary test runs in a test env
+
 
 
 
