@@ -59,8 +59,9 @@ VALUES (nextval('admin_id_seq'), 'admin', '[\"ROLE_ADMIN\"]', \
 41.3. $ symfony var:set --sensitive SYMFONY_DECRYPTION_SECRET=`php -r 'echo base64_encode(include("config/secrets/prod/prod.decrypt.private.php"));'`
 41.4. $ rm -f config/secrets/prod/prod.decrypt.private.php (Puedes añadir y hacer commit de todos los archivos; la clave de descifrado se ha añadido automáticamente al archivo .gitignore, por lo que nunca se enviará al repositorio. Para mayor seguridad, puedes quitarla de tu equipo local puesto que ya ha sido desplegado ahora:)
 
-42. symfony composer req phpunit - install phpunit to make unitary test
+42. symfony composer req phpunit --dev - install phpunit to make unitary test
 43. symfony console make:unit-test SpamCheckerTest - testing the spam cheker class
+44. symfony console make:functional-test Controller\\ConferenceController - creating a functional test 
 
 
 
