@@ -53,6 +53,7 @@ VALUES (nextval('admin_id_seq'), 'admin', '[\"ROLE_ADMIN\"]', \
 38. symfony console make:registration-form  -(to make a registration form)
 39. symfony composer req http-client -(to make API calls use the component http-client)
 40. symfony console secrets:set AKISMET_KEY -(API KEY secret vault)
+41. symfony var:set --sensitive AKISMET_KEY=abcdef -(creating a env for SymfonyCloud)
 
 
 
