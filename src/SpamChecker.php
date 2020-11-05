@@ -13,7 +13,7 @@ class SpamChecker
     {
         $this->client = $client;
         $this->endpoint = sprintf(
-            'https://%s.rest.akismet.com/1.1/commentcheck',
+            'https://%s.rest.akismet.com',
             $akismetKey
         );
     }
