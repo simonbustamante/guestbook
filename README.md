@@ -63,6 +63,10 @@ VALUES (nextval('admin_id_seq'), 'admin', '[\"ROLE_ADMIN\"]', \
 43. symfony console make:unit-test SpamCheckerTest - testing the spam cheker class
 44. symfony console make:functional-test Controller\\ConferenceController - creating a functional test 
 45. APP_ENV=test symfony console secrets:set AKISMET_KEY - unitary test runs in a test env
+46. APP_ENV=test symfony console doctrine:fixtures:load - make your data fixtures before running  a unitary functional test
+47. symfony run bin/phpunit tests/Controller/ConferenceControllerTest.php - run functional test
+48. symfony composer require dama/doctrine-test-bundle --dev - this enables to restablish the DB between tests and add to "phpunit.xml.dist" the listener
+<extensions><extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" /></extensions>
 
 
 
