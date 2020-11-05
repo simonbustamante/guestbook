@@ -6,7 +6,7 @@ namespace App\Tests\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 //use Symfony\Component\Panther\PantherTestCase;
 
-class ConferenceControllerTest extends PantherTestCase
+class ConferenceControllerTest extends WebTestCase
 {
     public function testIndex()
     {
