@@ -67,6 +67,7 @@ VALUES (nextval('admin_id_seq'), 'admin', '[\"ROLE_ADMIN\"]', \
 47. symfony run bin/phpunit tests/Controller/ConferenceControllerTest.php - run functional test
 48. symfony composer require dama/doctrine-test-bundle --dev - this enables to restablish the DB between tests and add to "phpunit.xml.dist" the listener
 <extensions><extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" /></extensions>
+49. symfony composer req messenger - installing messenger for asyncronous code
 
 
 
