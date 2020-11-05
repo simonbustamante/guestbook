@@ -12,6 +12,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\HiddenField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
@@ -32,6 +34,7 @@ class CommentCrudController extends AbstractCrudController
             TextEditorField::new('text'),
             EmailField::new('email'),
             DateField::new('createdAt'),
+            TextField::new('state'),
             AssociationField::new('conference'),//->autocomplet()
             
         ];
@@ -49,6 +52,7 @@ class CommentCrudController extends AbstractCrudController
             ->add('createdAt')
             ->add('conference')
             ->add('author')
+            ->add('state')
         ;
     }
     
