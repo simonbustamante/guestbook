@@ -17,6 +17,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\HiddenField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
+
 class CommentCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

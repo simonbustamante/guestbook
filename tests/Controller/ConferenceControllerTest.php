@@ -36,6 +36,12 @@ class ConferenceControllerTest extends WebTestCase
             'comment_form[photo]' => dirname(__DIR__, 2) . '/public/images/underconstruction.gif',
         ]);
         $this->assertResponseRedirects();
+
+        // simulate comment validation
+        $comment = self::$container->get(CommentRepository::class)->findOneByEmail($email);
+        $comment->setState('published');
+        self::$container->get(EntityManagerInterface::class)->flush();
+
         $client->followRedirect();
         $this->assertSelectorExists('div:contains("There are 2 comments")');
     }

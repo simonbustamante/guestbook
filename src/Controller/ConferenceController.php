@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Messenger\MessageBusInterface;
+use App\Message\CommentMessage;
 use App\Repository\ConferenceRepository;
 use App\Repository\CommentRepository;
 use Twig\Environment;
@@ -20,13 +22,18 @@ class ConferenceController extends AbstractController
 {
     private $twig;
     private $entityManager;
+    private $bus;
 
 
 
-    public function __construct(Environment $twig, EntityManagerInterface $entityManager)
+    public function __construct(
+        Environment $twig, 
+        EntityManagerInterface $entityManager,
+        MessageBusInterface $bus)
     {
         $this->twig = $twig;
         $this->entityManager = $entityManager;
+        $this->bus = $bus;
     }
     /**
      * @Route("/", name="homepage")
@@ -46,7 +53,6 @@ class ConferenceController extends AbstractController
         Conference $conference,
         ConferenceRepository $conferenceRepository,
         CommentRepository $commentRepository,
-        SpamChecker $spamChecker,
         string $photoDir
     ) {
         $comment = new Comment();
@@ -66,6 +72,7 @@ class ConferenceController extends AbstractController
             }
 
             $this->entityManager->persist($comment);
+            $this->entityManager->flush();
             //spam checker
             $context = [
                 'user_ip' => $request->getClientIp(),
@@ -73,11 +80,13 @@ class ConferenceController extends AbstractController
                 'referrer' => $request->headers->get('referer'),
                 'permalink' => $request->getUri(),
             ];
-            if (2 === $spamChecker->getSpamScore($comment, $context)) {
+            /*if (2 === $spamChecker->getSpamScore($comment, $context)) {
                 throw new \RuntimeException('Blatant spam, go away!');
-            }
+            }*/
             //spam checker
-            $this->entityManager->flush();
+            //$this->entityManager->flush();
+            
+            $this->bus->dispatch(new CommentMessage($comment->getId(),$context));
 
             return $this->redirectToRoute('conference', ['slug' => $conference->getSlug()]);
         }

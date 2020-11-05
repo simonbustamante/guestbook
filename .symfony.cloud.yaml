@@ -11,6 +11,7 @@ runtime:
         - ctype
         - iconv
         - redis
+        - amqp
        
 
 #variables:
@@ -22,7 +23,8 @@ build:
     flavor: none
 relationships:
     database: "db:postgresql"
-    redis: "rediscache:redis" 
+    redis: "rediscache:redis"
+    rabbitmq: "queue:rabbitmq" 
 disk: 512
 
 web:
