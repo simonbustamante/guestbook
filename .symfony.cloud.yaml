@@ -12,6 +12,7 @@ runtime:
         - iconv
         - redis
         - amqp
+        - xsl
        
 
 #variables:
