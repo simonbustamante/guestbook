@@ -27,10 +27,10 @@ class ConferenceController extends AbstractController
 
 
     public function __construct(
-        Environment $twig, 
+        Environment $twig,
         EntityManagerInterface $entityManager,
-        MessageBusInterface $bus)
-    {
+        MessageBusInterface $bus
+    ) {
         $this->twig = $twig;
         $this->entityManager = $entityManager;
         $this->bus = $bus;
@@ -41,10 +41,27 @@ class ConferenceController extends AbstractController
     //public function index(string $name = ''): Response
     public function index(ConferenceRepository $conferenceRepository)
     {
-        return new Response($this->twig->render('conference/index.html.twig', [
+        //return new Response($this->twig->render('conference/index.html.twig', [
+        $response = new Response($this->twig->render('conference/index.html.twig', [
             'conferences' => $conferenceRepository->findAll(),
         ]));
+        $response->setSharedMaxAge(3600);
+        return $response;
     }
+
+    /** 
+     * @Route("/conference/header", name="conference_header")
+     */
+    public function conferenceHeader(ConferenceRepository $conferenceRepository)
+    {
+        $response = new Response($this->twig->render('conference/header.html.twig', [
+                'conferences' => $conferenceRepository->findAll(),
+            ]
+        ));
+        $response->setSharedMaxAge(3600);
+        return $response;
+    }
+
     /**
      * @Route("/conference/{slug}", name="conference")
      */
@@ -85,8 +102,8 @@ class ConferenceController extends AbstractController
             }*/
             //spam checker
             //$this->entityManager->flush();
-            
-            $this->bus->dispatch(new CommentMessage($comment->getId(),$context));
+
+            $this->bus->dispatch(new CommentMessage($comment->getId(), $context));
 
             return $this->redirectToRoute('conference', ['slug' => $conference->getSlug()]);
         }
