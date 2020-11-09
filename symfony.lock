@@ -117,6 +117,9 @@
     "egulias/email-validator": {
         "version": "2.1.23"
     },
+    "imagine/imagine": {
+        "version": "1.2.4"
+    },
     "jms/metadata": {
         "version": "2.3.0"
     },

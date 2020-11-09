@@ -3,6 +3,7 @@
 namespace App\MessageHandler;
 
 use App\Message\CommentMessage;
+use App\ImageOptimizer;
 use App\Repository\CommentRepository;
 use App\SpamChecker;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,6 +23,8 @@ class CommentMessageHandler implements MessageHandlerInterface
     private $workflow;
     private $logger;
     private $mailer;
+    private $imageOptimizer;
+    private $photoDir;
     private $adminEmail;
 
     public function __construct(
@@ -32,6 +35,8 @@ class CommentMessageHandler implements MessageHandlerInterface
         WorkflowInterface $commentStateMachine,
         MailerInterface $mailer,
         string $adminEmail,
+        ImageOptimizer $imageOptimizer,
+        string $photoDir,
         LoggerInterface $logger = null
     ) {
         $this->entityManager = $entityManager;
@@ -42,6 +47,8 @@ class CommentMessageHandler implements MessageHandlerInterface
         $this->logger = $logger;
         $this->mailer = $mailer;
         $this->adminEmail = $adminEmail;
+        $this->imageOptimizer = $imageOptimizer;
+        $this->photoDir = $photoDir;
     }
     public function __invoke(CommentMessage $message)
     {
@@ -77,6 +84,12 @@ class CommentMessageHandler implements MessageHandlerInterface
                 ->from($this->adminEmail)
                 ->to($this->adminEmail)
                 ->context(['comment' => $comment]));
+        } elseif ($this->workflow->can($comment, 'optimize')) {
+            if ($comment->getPhotoFilename()) {
+                $this->imageOptimizer->resize($this->photoDir . '/' . $comment->getPhotoFilename());
+            }
+            $this->workflow->apply($comment, 'optimize');
+            $this->entityManager->flush();
         } elseif ($this->logger) {
             $this->logger->debug('Dropping comment message', ['comment' =>
             $comment->getId(), 'state' => $comment->getState()]);
