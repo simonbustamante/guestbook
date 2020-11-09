@@ -14,8 +14,8 @@
                     <div class="media shadow border rounded-lg p-3 mb-4">
                         <div class="comment-img mr-3">
                             {% if comment.photofilename %}
-                                <a href="{{ asset('uploads/photos/' ~ comment.photofilename) }}" target="_blank">
-                                    <img src="{{ asset('uploads/photos/' ~ comment.photofilename) }}" />
+                                <a href="{{ asset('images/photos/' ~ comment.photofilename) }}" target="_blank">
+                                    <img src="{{ asset('images/photos/' ~ comment.photofilename) }}"  width= "100"/>
                                 </a>
                             {% endif %}
                         </div>
