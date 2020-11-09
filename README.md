@@ -69,7 +69,7 @@ VALUES (nextval('admin_id_seq'), 'admin', '[\"ROLE_ADMIN\"]', \
 <extensions><extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" /></extensions>
 49. symfony composer req messenger - installing messenger for asyncronous code
 50. symfony console workflow:dump comment | dot -Tpng -o workflow.png - to check workflows
-
+51. symfony run -d yarn encore dev --watch - An important change to the Webpack is that the CSS and JS files are not used directly by the application. They need to be "compiled" first.
 
 
 
