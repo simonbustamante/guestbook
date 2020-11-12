@@ -4,7 +4,7 @@ namespace App\Api;
 
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryItemExtensionInterface;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface as Hola;
 use App\Entity\Comment;
 use Doctrine\ORM\QueryBuilder;
 
@@ -12,7 +12,7 @@ class FilterPublishedCommentQueryExtension implements QueryCollectionExtensionIn
 {
     public function applyToCollection(
         QueryBuilder $qb,
-        QueryNameGeneratorInterface $queryNameGenerator,
+        Hola $queryNameGenerator,
         string $resourceClass,
         string $operationName = null
     ) {
@@ -23,9 +23,7 @@ class FilterPublishedCommentQueryExtension implements QueryCollectionExtensionIn
             ));
         }
     }
-    public function applyToItem(QueryBuilder $qb, QueryNameGeneratorInterface
-    $queryNameGenerator, string $resourceClass, array $identifiers, string
-    $operationName = null, array $context = [])
+    public function applyToItem(QueryBuilder $qb, Hola $queryNameGenerator, string $resourceClass, array $identifiers, string $operationName = null, array $context = [])
     {
         if (Comment::class === $resourceClass) {
             $qb->andWhere(sprintf(
