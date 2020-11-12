@@ -39,7 +39,7 @@ web:
 
 mounts:
     "/var": { source: local, source_path: var }
-    "/public/images": { source: service, service: files, source_path: uploads
+    "/public/images": { source: service, service: files, source_path: uploads }
 
 hooks:
     build: |
@@ -61,3 +61,11 @@ workers:
 
                 (>&2 symfony-deploy)
                 php bin/console messenger:consume async -vv --time-limit 3600 --memory-limit=128M
+crons:
+    comment_cleanup:
+        # Cleanup every night at 11.50 pm (UTC).
+        spec: '50 23 * * *'
+        cmd: |
+            if [ "$SYMFONY_BRANCH" = "master" ]; then
+                croncape symfony console app:comment:cleanup
+            fi
