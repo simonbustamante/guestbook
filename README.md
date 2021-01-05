@@ -10,6 +10,8 @@ This is a personal exercise based on Fabien Potencier book "The Fast Track". Som
 
 1. Clone the repository and cd that location
 2. symfony server:ca:install - install a CA
+  2.1 add the public key to your Symfony Cloud with - symfony account:ssh:key:add 
+  2.2 if your are not logged in - symfony login
 3. symfony book:check-requirements - to allow you to install some packages
 4. symfony new guestbook --version=5.1.* - to create a new project but if you cloned the repository this is not necessary
 5. symfony server:start -d - to start server, maybe at this point it won't work because you will need a data base
