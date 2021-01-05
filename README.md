@@ -49,9 +49,9 @@ This is a personal exercise based on Fabien Potencier book "The Fast Track". Som
 34. symfony console make:subscriber TwigEventSubscriber - creating a subcriber
 35. symfony console make:user Admin - creating an Admin user
 36. symfony console security:encode-password - generating a passwordfor admin user
-37. symfony run psql -c "INSERT INTO admin (id, username, roles, password) \
-VALUES (nextval('admin_id_seq'), 'admin', '[\"ROLE_ADMIN\"]', \
-'\$argon2id\$v=19\$m=65536,t=4,p=1\$CoRhi2o2vFf304A/NHMypw\$UNauM7sWii+DyyfiDhqTIKAWP28t+Dcvhxt7U9jM1IA')"            -(Create a security user)
+37. symfony run psql -c "INSERT INTO admin (id, username, roles, password) \\
+VALUES (nextval('admin_id_seq'), 'admin', '[\\"ROLE_ADMIN\\"]', \\
+'\\$argon2id\\$v=19\\$m=65536,t=4,p=1\\$CoRhi2o2vFf304A/NHMypw\\$UNauM7sWii+DyyfiDhqTIKAWP28t+Dcvhxt7U9jM1IA')"            -(Create a security user)
 38. symfony console make:registration-form  -(to make a registration form)
 39. symfony composer req http-client -(to make API calls use the component http-client)
 40. symfony console secrets:set AKISMET_KEY -(API KEY secret vault)
